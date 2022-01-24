@@ -1,5 +1,8 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "printWidth": 70
+  "singleQuote":true,
+  "trailingComma":"all",
+  "printWidth":80,
+  "proseWrap":"never",
+  "endOfLine":"auto",
+  "semi": true
 }
