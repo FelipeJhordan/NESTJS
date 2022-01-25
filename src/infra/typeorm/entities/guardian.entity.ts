@@ -1,6 +1,6 @@
+import { Guardian } from 'src/domain/models/guardian';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { PetEntity } from '../pet/pet.entity';
-import { Guardian } from '../../domain/models/guardian';
+import { PetEntity } from './pet.entity';
 
 @Entity({ name: 'guardians' })
 export class GuardianEntity implements Guardian {

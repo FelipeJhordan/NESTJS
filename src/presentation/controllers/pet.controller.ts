@@ -7,10 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Pet } from './pet';
-import { PetEntity } from './pet.entity';
-import { PetService } from './pet.service';
-import { PetDTO } from './petDTO';
+import { PetService } from 'src/app/usecases/pet.service';
+import { PetEntity } from 'src/infra/typeorm/entities/pet.entity';
+import { PetDTO } from '../../domain/dto/petDTO';
 
 @Controller('/api/pets')
 export class PetController {

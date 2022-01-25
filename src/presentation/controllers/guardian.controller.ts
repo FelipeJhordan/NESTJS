@@ -7,10 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { GuardianEntity } from './guardian.entity';
-import { Guardian } from '../../domain/models/guardian';
-import { GuardianService } from './guardian.service';
-import { GuardianDTO } from './guardianDTO';
+import { GuardianService } from 'src/app/usecases/guardian.service';
+import { GuardianEntity } from 'src/infra/typeorm/entities/guardian.entity';
+import { GuardianDTO } from '../../domain/dto/guardianDTO';
 
 @Controller('/api/guardians')
 export class GuardianController {

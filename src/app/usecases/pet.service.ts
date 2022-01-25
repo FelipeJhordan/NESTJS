@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomInt } from 'crypto';
-import { Pet } from './pet';
-import { PetRepository } from './pet-repository';
-import { PetEntity } from './pet.entity';
-import { PetDTO } from './petDTO';
+import { PetDTO } from 'src/domain/dto/petDTO';
+import { PetEntity } from 'src/infra/typeorm/entities/pet.entity';
+import { PetRepository } from 'src/infra/typeorm/repositories/pet-repository';
 
 @Injectable()
 export class PetService {

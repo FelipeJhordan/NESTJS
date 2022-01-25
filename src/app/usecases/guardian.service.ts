@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { GuardianRepository } from './guardian-repository';
-import { GuardianEntity } from './guardian.entity';
-import { GuardianDTO } from './guardianDTO';
+import { GuardianDTO } from 'src/domain/dto/guardianDTO';
+import { GuardianUseCases } from 'src/domain/usecases/guardian/guardian-usecases';
+import { GuardianEntity } from 'src/infra/typeorm/entities/guardian.entity';
+import { GuardianRepository } from 'src/infra/typeorm/repositories/guardian-repository';
 
 @Injectable()
-export class GuardianService {
+export class GuardianService implements GuardianUseCases {
   constructor(
     @InjectRepository(GuardianEntity)
     private readonly guardianRepository: GuardianRepository,

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { GuardianController } from './guardian.controller';
-import { GuardianEntity } from './guardian.entity';
-import { GuardianService } from './guardian.service';
+import { GuardianService } from 'src/app/usecases/guardian.service';
+import { GuardianEntity } from 'src/infra/typeorm/entities/guardian.entity';
+import { GuardianController } from '../../presentation/controllers/guardian.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([GuardianEntity])],

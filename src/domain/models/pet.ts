@@ -1,4 +1,4 @@
-import { Guardian } from '../guardian/guardian.model';
+import { Guardian } from '../../domain/models/guardian';
 
 export interface Pet {
   id: string;
