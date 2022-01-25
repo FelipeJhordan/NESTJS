@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { GuardianEntity } from './guardian.entity';
-import { Guardian } from './guardian.model';
+import { Guardian } from '../../domain/models/guardian';
 import { GuardianService } from './guardian.service';
 import { GuardianDTO } from './guardianDTO';
 

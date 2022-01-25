@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { randomInt } from 'crypto';
 import { GuardianRepository } from './guardian-repository';
 import { GuardianEntity } from './guardian.entity';
-import { Guardian } from './guardian.model';
 import { GuardianDTO } from './guardianDTO';
-import mock from './mock';
 
 @Injectable()
 export class GuardianService {
@@ -13,7 +10,6 @@ export class GuardianService {
     @InjectRepository(GuardianEntity)
     private readonly guardianRepository: GuardianRepository,
   ) {}
-  private guardians: Guardian[] = mock;
 
   async getGuardians(): Promise<GuardianEntity[]> {
     return this.guardianRepository.find({});
