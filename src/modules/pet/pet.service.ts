@@ -1,35 +1,39 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { randomInt } from 'crypto';
-import { Pet } from './pet.model';
+import { Pet } from './pet';
+import { PetRepository } from './pet-repository';
+import { PetEntity } from './pet.entity';
 import { PetDTO } from './petDTO';
-import mock from './mock';
 
 @Injectable()
 export class PetService {
-  private pets: Pet[] = mock;
-
-  getPets(): Pet[] {
-    return this.pets;
+  constructor(
+    @InjectRepository(PetEntity)
+    private readonly petRepository: PetRepository,
+  ) {}
+  async getPets(): Promise<PetEntity[]> {
+    return this.petRepository.find();
   }
 
-  getPetByName(name: string): Pet[] {
-    return this.pets.filter((pet) => pet.name === name);
+  async getPetByName(name: string): Promise<PetEntity[]> {
+    return this.petRepository.find({
+      name,
+    });
   }
 
-  addPet(petDto: PetDTO): void {
-    this.pets.push({ ...petDto, id: randomInt(12).toString() });
+  async addPet(petDto: PetDTO): Promise<void> {
+    const pet = this.petRepository.create(petDto);
+    this.petRepository.save(pet);
   }
 
-  removePet(id: string) {
-    this.pets = this.pets.filter((pet) => pet.id !== id);
+  async removePet(id: string) {
+    this.petRepository.delete(id);
   }
 
-  updatePet(id: string, petDto: PetDTO) {
-    const petIndex = this.pets.findIndex((pet) => pet.id === id);
-
-    this.pets[petIndex] = {
-      ...this.pets[petIndex],
+  async updatePet(id: string, petDto: PetDTO) {
+    this.petRepository.update(id, {
       ...petDto,
-    };
+    });
   }
 }

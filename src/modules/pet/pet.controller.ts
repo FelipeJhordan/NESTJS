@@ -7,7 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { Pet } from './pet.model';
+import { Pet } from './pet';
+import { PetEntity } from './pet.entity';
 import { PetService } from './pet.service';
 import { PetDTO } from './petDTO';
 
@@ -16,27 +17,27 @@ export class PetController {
   constructor(private readonly petService: PetService) {}
 
   @Get('/:name')
-  getPetByName(@Param('name') name: string): Pet[] {
+  async getPetByName(@Param('name') name: string): Promise<PetEntity[]> {
     return this.petService.getPetByName(name);
   }
 
   @Get()
-  getPets(): Pet[] {
+  async getPets(): Promise<PetEntity[]> {
     return this.petService.getPets();
   }
 
   @Post()
-  addPet(@Body() petDto: PetDTO) {
+  async addPet(@Body() petDto: PetDTO) {
     this.petService.addPet(petDto);
   }
 
   @Delete('/:id')
-  removePet(@Param('id') id: string) {
+  async removePet(@Param('id') id: string) {
     this.petService.removePet(id);
   }
 
   @Put('/:id')
-  updatePet(@Param('id') id: string, @Body() petDto: PetDTO) {
+  async updatePet(@Param('id') id: string, @Body() petDto: PetDTO) {
     this.petService.updatePet(id, petDto);
   }
 }
