@@ -21,8 +21,8 @@ module.exports = {
   logger: 'file',
 
   migrationsTableName: 'migrations',
-  migrations: ['dist/migrations/*.js'],
+  migrations: ['dist/infra/typeorm/migrations/*.js'],
   cli: {
-    migrationsDir: 'src/migrations',
+    migrationsDir: 'src/infra/typeorm/migrations',
   },
 };
