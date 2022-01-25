@@ -7,6 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { GuardianEntity } from './guardian.entity';
 import { Guardian } from './guardian.model';
 import { GuardianService } from './guardian.service';
 import { GuardianDTO } from './guardianDTO';
@@ -16,27 +17,33 @@ export class GuardianController {
   constructor(private readonly guardianService: GuardianService) {}
 
   @Get('/:name')
-  getGuardianByName(@Param('name') name: string): Guardian[] {
+  async getGuardianByName(
+    @Param('name') name: string,
+  ): Promise<GuardianEntity[]> {
     return this.guardianService.getGuardianByName(name);
   }
 
   @Get()
-  getGuardians(): Guardian[] {
-    return this.guardianService.getGuardians();
+  async getGuardians(): Promise<GuardianEntity[]> {
+    const guardians = await this.guardianService.getGuardians();
+    return guardians;
   }
 
   @Post()
-  addGuardian(@Body() guardianDto: GuardianDTO) {
-    this.guardianService.addGuardian(guardianDto);
+  async addGuardian(@Body() guardianDto: GuardianDTO) {
+    await this.guardianService.addGuardian(guardianDto);
   }
 
   @Delete('/:id')
-  removeGuardian(@Param('id') id: string) {
-    this.guardianService.removeGuardian(id);
+  async removeGuardian(@Param('id') id: string) {
+    await this.guardianService.removeGuardian(id);
   }
 
   @Put('/:id')
-  updateGuardian(@Param('id') id: string, @Body() guardianDto: GuardianDTO) {
-    this.guardianService.updateGuardian(id, guardianDto);
+  async updateGuardian(
+    @Param('id') id: string,
+    @Body() guardianDto: GuardianDTO,
+  ) {
+    await this.guardianService.updateGuardian(id, guardianDto);
   }
 }

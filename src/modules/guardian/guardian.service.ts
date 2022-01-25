@@ -1,40 +1,42 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { randomInt } from 'crypto';
+import { GuardianRepository } from './guardian-repository';
+import { GuardianEntity } from './guardian.entity';
 import { Guardian } from './guardian.model';
 import { GuardianDTO } from './guardianDTO';
 import mock from './mock';
 
 @Injectable()
 export class GuardianService {
-  constructor() {
-    console.log('eai');
-  }
+  constructor(
+    @InjectRepository(GuardianEntity)
+    private readonly guardianRepository: GuardianRepository,
+  ) {}
   private guardians: Guardian[] = mock;
 
-  getGuardians(): Guardian[] {
-    return this.guardians;
+  async getGuardians(): Promise<GuardianEntity[]> {
+    return this.guardianRepository.find({});
   }
 
-  getGuardianByName(name: string): Guardian[] {
-    return this.guardians.filter((guardian) => guardian.name === name);
+  async getGuardianByName(name: string): Promise<GuardianEntity[]> {
+    return this.guardianRepository.find({
+      name,
+    });
   }
 
-  addGuardian(guardianDto: GuardianDTO): void {
-    this.guardians.push({ ...guardianDto, id: randomInt(12).toString() });
+  async addGuardian(guardianDto: GuardianDTO): Promise<void> {
+    const guardian = this.guardianRepository.create({ ...guardianDto });
+    this.guardianRepository.save(guardian);
   }
 
-  removeGuardian(id: string) {
-    this.guardians = this.guardians.filter((guardian) => guardian.id !== id);
+  async removeGuardian(id: string) {
+    this.guardianRepository.delete({ id });
   }
 
-  updateGuardian(id: string, guardianDto: GuardianDTO) {
-    const guardianIndex = this.guardians.findIndex(
-      (guardian) => guardian.id === id,
-    );
-
-    this.guardians[guardianIndex] = {
-      ...this.guardians[guardianIndex],
+  async updateGuardian(id: string, guardianDto: GuardianDTO) {
+    this.guardianRepository.update(id, {
       ...guardianDto,
-    };
+    });
   }
 }
